@@ -1,0 +1,19 @@
+# Files
+.DS_Store
+.npmrc
+
+# Extensions
+*.local
+*.log
+*.pid
+*.swp
+*.vi
+*~
+
+# Directories
+dist/
+misc/
+node_modules/
+tmp/
+.cache/
+.vscode/

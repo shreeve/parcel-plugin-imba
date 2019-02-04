@@ -1,0 +1,26 @@
+{
+  "name": "parcel-plugin-imba",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf .cache dist node_modules package-lock.json yarn.lock yarn-error.log",
+    "reset": "rm -rf .cache dist node_modules package-lock.json yarn.lock yarn-error.log && yarn"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shreeve/parcel-plugin-imba.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shreeve/parcel-plugin-imba/issues"
+  },
+  "homepage": "https://github.com/shreeve/parcel-plugin-imba#readme",
+  "dependencies": {
+    "de-indent": "^1.0.2",
+    "md5": "^2.2.1",
+    "terser": "^3.16.1"
+  }
+}
