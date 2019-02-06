@@ -175,8 +175,6 @@ class ImbaAsset extends Asset {
       return '';
     }
 
-    this.addDependency('vue-hot-reload-api');
-
     let cssHMR = '';
     if (this.ast.styles.length) {
       cssHMR = `
@@ -190,16 +188,6 @@ class ImbaAsset extends Asset {
     /* hot reload */
     (function () {
       if (module.hot) {
-        var api = require('vue-hot-reload-api');
-        if (api.compatible) {
-          module.hot.accept();
-          if (!module.hot.data) {
-            api.createRecord('${optsVar}', ${optsVar});
-          } else {
-            api.reload('${optsVar}', ${optsVar});
-          }
-        }
-
         ${cssHMR}
       }
     })();`;
