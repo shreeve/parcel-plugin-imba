@@ -133,7 +133,7 @@ class ImbaAsset extends Asset {
       result.push(map);
     }
 
-    let css = generated.filter(r => r.type === 'css').join('');
+    let css = generated.filter(r => r.type === 'css').map(r => r.value).join('');
     if (css) {
       result.push({
         type: 'css',
