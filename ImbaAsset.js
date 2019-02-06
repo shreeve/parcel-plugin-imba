@@ -36,7 +36,6 @@ class ImbaAsset extends Asset {
     });
 
     return {
-      template: null,
       script: {
         lang: 'js',
         content: transpiled.js,
@@ -74,16 +73,13 @@ class ImbaAsset extends Asset {
   async postProcess(generated) {
     let result = [];
 
-    let hasScoped = this.ast.styles.some(s => s.scoped);
     let id = md5(this.name).slice(-6);
-    let scopeId = hasScoped ? `data-v-${id}` : null;
     let optsVar = '$' + id;
 
     // Generate JS output.
     let js = this.ast.script ? generated[0].value : '';
     let supplemental = '';
 
-    // TODO: make it possible to process this code with the normal scope hoister
     if (this.options.scopeHoist) {
       optsVar = `$${this.id}$export$default`;
 
@@ -123,8 +119,8 @@ class ImbaAsset extends Asset {
         supplemental = `\n(function(){${supplemental}})();`;
       }
     }
-    js += supplemental;
 
+    js += supplemental;
     if (js) {
       result.push({
         type: 'js',
@@ -137,7 +133,7 @@ class ImbaAsset extends Asset {
       result.push(map);
     }
 
-    let css = this.compileStyle(generated, scopeId);
+    let css = generated.filter(r => r.type === 'css').join('');
     if (css) {
       result.push({
         type: 'css',
@@ -172,31 +168,6 @@ class ImbaAsset extends Asset {
     }
 
     return '';
-  }
-
-  compileStyle(generated, scopeId) {
-    return generated.filter(r => r.type === 'css').reduce((p, r, i) => {
-      let css = r.value;
-      let scoped = this.ast.styles[i].scoped;
-
-      // Process scoped styles if needed.
-      if (scoped) {
-        let {code, errors} = this.vue.compileStyle({
-          source: css,
-          filename: this.relativeName,
-          id: scopeId,
-          scoped
-        });
-
-        if (errors.length) {
-          throw errors[0];
-        }
-
-        css = code;
-      }
-
-      return p + css;
-    }, '');
   }
 
   compileHMR(generated, optsVar) {
